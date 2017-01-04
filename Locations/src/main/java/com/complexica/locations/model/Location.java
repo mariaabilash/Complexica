@@ -1,7 +1,10 @@
 package com.complexica.locations.model;
 
-public class Location
+import java.io.Serializable;
+
+public class Location implements Serializable
 {
+    private static final long serialVersionUID = 1L;
     private String latitude;
     private String longitude;
     private String title;

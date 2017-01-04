@@ -1,7 +1,11 @@
 package com.complexica.locations.service;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,11 +23,12 @@ public class LocationService
     {
         this.locations.clear();
         this.locations.addAll(locations);
+        persistList(locations);
     }
 
     public List<Location> getLocations()
     {
-        return locations;
+        return readList();
     }
 
     public List<Location> getLocationsFromCSV()
@@ -69,5 +74,41 @@ public class LocationService
             }
         }
         return new ArrayList<Location>(Arrays.asList(locationArray));
+    }
+    
+    private void persistList(List<Location> locations)
+    {
+        try
+        {
+            FileOutputStream fileOut= new FileOutputStream (ResourceUtils.getFile("classpath:location.tmp"));
+            ObjectOutputStream objectOutStream = new ObjectOutputStream(fileOut);
+            objectOutStream.writeObject(locations);
+            fileOut.close();
+        }
+        catch (Exception exception)
+        {
+            exception.printStackTrace();
+        }
+    }
+    
+    private List<Location> readList()
+    {
+        List<Location> locations = new ArrayList<Location>();
+        try
+        {
+            FileInputStream fileIn= new FileInputStream (ResourceUtils.getFile("classpath:location.tmp"));
+            if (fileIn.available() != 0)
+            {
+                ObjectInputStream objectInStream = new ObjectInputStream(fileIn);
+                locations= (ArrayList<Location>)objectInStream.readObject();
+                objectInStream.close();
+            }
+            fileIn.close();
+        }
+        catch (Exception exception)
+        {
+            exception.printStackTrace();
+        }
+        return locations;
     }
 }
