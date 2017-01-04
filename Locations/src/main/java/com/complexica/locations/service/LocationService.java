@@ -3,7 +3,7 @@ package com.complexica.locations.service;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
@@ -49,7 +49,25 @@ public class LocationService
         {
             expection.printStackTrace();
         }
-        Collections.sort(locations, (l1, l2) -> l1.getTitle().compareTo(l2.getTitle()));
-        return locations;
+        //Collections.sort(locations, (l1, l2) -> l1.getTitle().compareTo(l2.getTitle()));
+        return sortLocations(locations);
+    }
+
+    private List<Location> sortLocations(List<Location> locations)
+    {
+        Location[] locationArray = locations.toArray(new Location[locations.size()]);
+        for (int i=0; i < locationArray.length; i++)
+        {
+            for (int j=i+1; j < locationArray.length; j++)
+            {
+                if (locationArray[i].getTitle().compareTo(locationArray[j].getTitle()) > 0)
+                {
+                    Location tempLocation = locationArray[i];
+                    locationArray[i] = locationArray[j];
+                    locationArray[j] = tempLocation;
+                }
+            }
+        }
+        return new ArrayList<Location>(Arrays.asList(locationArray));
     }
 }
