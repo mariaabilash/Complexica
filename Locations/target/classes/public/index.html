@@ -1,0 +1,56 @@
+<!doctype html>
+<html ng-app="locations">
+<head>
+    <title>McDonald's Store Locations</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="locations.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            text-align: left;
+            padding: 8px;
+         }
+         tr:nth-child(even){background-color: #f2f2f2}
+</style>
+</head>
+<body ng-controller="locationscontroller">
+    <div style="width:100;">
+        <div style="float:top";>
+            <table class="table">
+                <tr>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>Title</th>
+                    <th>Address</th>
+                </tr>
+                <tr ng-repeat="location in locationscsv">
+                    <td>{{location.latitude}}</td>
+                    <td>{{location.longitude}}</td>
+                    <td>{{location.title}}</td>
+                    <td>{{location.address}}</td>
+                </tr>
+                <tr><td>URL: </td><td><input type="url" ng-model="url"/></td></tr>
+                <tr>
+                   <td><button ng-click="showPostDiv()">POST</button></td>
+                   <td><button ng-click="showGetDiv()">GET</button></td>
+                </tr>
+            </table>
+        </div>
+        <div ng-show="postDiv == true" ng-init="post.response = Unknown"> {{ post.response }} 
+        </div>
+        <div ng-show="getDiv == true">
+            <table class="table2">
+                <tr ng-repeat="location in locations">
+                <td>{{location.latitude}}</td>
+                <td>{{location.longitude}}</td>
+               <td>{{location.title}}</td>
+               <td>{{location.address}}</td>
+               </tr>
+           </table>
+       </div>
+    </div>
+</body>
+</html>

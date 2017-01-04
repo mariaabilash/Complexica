@@ -1,0 +1,5 @@
+com/complexica/locations/service/LocationService.class
+com/complexica/locations/controller/HomeController.class
+com/complexica/locations/model/Location.class
+com/complexica/locations/controller/LocationController.class
+com/complexica/locations/MainConfiguration.class
